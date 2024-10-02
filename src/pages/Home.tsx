@@ -1,27 +1,40 @@
 import { useState } from "react";
 import { QrScannerComponent } from "../components";
-import { useNavigate } from "react-router-dom";
+import useQR from "../hook/useQR";
+import { ModalWithForm } from "../components/ModalWithForm ";
 
 export const Home = () => {
-  const [showScanner, setShowScanner] = useState(false); // Estado para mostrar/ocultar el escáner
-  const navigate = useNavigate(); // Hook para navegación interna
+  const [showScanner, setShowScanner] = useState(false);
+  const [validationResult, setValidationResult] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(true); // Estado para controlar el modal
+  const { handleValidateQR } = useQR();
+  ///MODAL
 
   const handleStartScan = () => {
-    setShowScanner(true); // Mostrar el escáner cuando se hace clic en el botón
+    setShowScanner(true);
   };
 
-  // Función que recibe el mensaje escaneado desde el componente QrScannerComponent
-  const handleScanResult = (message: string) => {
-    setShowScanner(false); // Ocultar el escáner después de escanear
+  const handleScanResult = async (message: string) => {
+    setShowScanner(false);
 
-    // Verificar si el mensaje es un enlace
-    if (message.startsWith("http://") || message.startsWith("https://")) {
-      // Si es una URL externa, redirigir fuera de la aplicación
-      window.location.href = message;
-    } else {
-      // Si es una ruta interna, usar navigate
-      navigate(message);
+    console.log("QR escaneado:", message); // Verifica qué valor tiene el QR escaneado
+
+    try {
+      const { statusCode } = await handleValidateQR();
+
+      if (statusCode === 200) {
+        setValidationResult("Asistencia marcada correctamente.");
+        setIsModalOpen(true); // Mostrar el modal si la validación es exitosa
+      } else {
+        setValidationResult("No se pudo marcar la asistencia.");
+      }
+    } catch (error) {
+      setValidationResult("Ocurrió un error al validar el QR.");
     }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -35,7 +48,6 @@ export const Home = () => {
           la cámara de tu dispositivo.
         </p>
 
-        {/* Botón para iniciar el escaneo de QR */}
         {!showScanner && (
           <button
             onClick={handleStartScan}
@@ -45,13 +57,20 @@ export const Home = () => {
           </button>
         )}
 
-        {/* Mostrar el componente de escaneo QR */}
         {showScanner && (
           <div className="mt-6 animate-fade-in">
             <QrScannerComponent onScan={handleScanResult} />
           </div>
         )}
+
+        {validationResult && (
+          <p className="mt-4 text-lg font-bold text-center text-green-500">
+            {validationResult}
+          </p>
+        )}
       </div>
+
+      <ModalWithForm isModalOpen={isModalOpen} closeModal={closeModal} />
     </div>
   );
 };

@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
-import { Home, Login } from "../pages";
+import { Home, Login, MainQR } from "../pages";
 
 export const AppRouter = () => {
   return (
@@ -9,6 +9,7 @@ export const AppRouter = () => {
         <Route path="/" element={<Navigate to="/home" />} />
         <Route path="/home" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/qr-image" element={<MainQR />} />
 
         <Route path="/admin/*" element={<PrivateRoutes />} />
 
