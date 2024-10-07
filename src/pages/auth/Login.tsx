@@ -45,7 +45,7 @@ export const Login = () => {
           <div className="flex justify-center">
             <img
               className="w-auto h-24"
-              src="https://devioz.com/images/Logo.webp"
+              src="https://devioz.com/images/logo.png"
               alt="Devioz Logo"
             />
           </div>

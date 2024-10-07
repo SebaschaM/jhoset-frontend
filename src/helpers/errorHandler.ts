@@ -2,7 +2,6 @@
 export const handleApiError = (error: any) => {
   if (error.response) {
     // El servidor respondió con un código de estado que está fuera del rango 2xx
-    console.error("Error de respuesta:", error.response);
     return {
       message: error.response.data.message || "Error del servidor",
       status: error.response.status,

@@ -23,7 +23,7 @@ export const Home = () => {
       const { statusCode } = await handleValidateQR();
 
       if (statusCode === 200) {
-        setValidationResult("Asistencia marcada correctamente.");
+        setValidationResult("QR validado correctamente.");
         setIsModalOpen(true); // Mostrar el modal si la validación es exitosa
       } else {
         setValidationResult("No se pudo marcar la asistencia.");

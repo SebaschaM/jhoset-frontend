@@ -49,7 +49,7 @@ export const Aside = ({ isOpen, onToggle }: AsideProps) => {
           {/* Logo */}
           <div className="flex flex-col items-center py-6 space-y-6">
             <img
-              src="https://devioz.com/images/Logo.webp"
+              src="https://devioz.com/images/logo.png"
               alt="empresa"
               className="h-[6rem]"
             />

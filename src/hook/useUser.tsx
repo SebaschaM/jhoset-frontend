@@ -11,8 +11,18 @@ const useUser = () => {
     }
   };
 
+  const handleVerifyDNIUser = async (dni: number) => {
+    try {
+      const response = await attendanceApi.get(`/user/search-dni?dni=${dni}`);
+      return response.data;
+    } catch (error) {
+      return handleApiError(error);
+    }
+  };
+
   return {
     handleGetAllUsers,
+    handleVerifyDNIUser,
   };
 };
 
