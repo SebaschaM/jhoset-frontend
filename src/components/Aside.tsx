@@ -9,9 +9,9 @@ interface AsideProps {
 
 // Módulos del Dashboard
 const modules = [
-  { name: "Inicio", icon: FaHome, path: "/admin/inicio" },
-  { name: "Usuarios", icon: FaUsers, path: "/admin/usuarios" },
-  { name: "Asistencia", icon: FaBusinessTime, path: "/admin/asistencia" },
+  { name: "Inicio", icon: FaHome, path: "/admin/home" },
+  { name: "Usuarios", icon: FaUsers, path: "/admin/users" },
+  { name: "Asistencia", icon: FaBusinessTime, path: "/admin/attendance" },
 ];
 
 export const Aside = ({ isOpen, onToggle }: AsideProps) => {

@@ -20,3 +20,10 @@
 .animate-fade-in {
   animation: fade-in 0.5s ease-in-out;
 }
+
+#qr-reader video {
+  transform: rotate(90deg); /* Rotar el vídeo 90 grados para verlo vertical */
+  object-fit: cover; /* Asegura que el vídeo ocupe el contenedor completo */
+  width:  20rem;
+  height: 24rem;
+}

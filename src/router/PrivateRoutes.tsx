@@ -6,9 +6,9 @@ const PrivateRoutes = () => {
   return (
     <PrivateRoute>
       <Routes>
-        <Route path="inicio" element={<AdminHome />} />
-        <Route path="usuarios" element={<AdminUsers />} />
-        <Route path="asistencia" element={<AdminAttendance />} />
+        <Route path="home" element={<AdminHome />} />
+        <Route path="users" element={<AdminUsers />} />
+        <Route path="attendance" element={<AdminAttendance />} />
       </Routes>
       <Outlet />
     </PrivateRoute>

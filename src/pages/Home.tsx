@@ -6,18 +6,31 @@ import { ModalWithForm } from "../components/ModalWithForm ";
 export const Home = () => {
   const [showScanner, setShowScanner] = useState(false);
   const [validationResult, setValidationResult] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(true); // Estado para controlar el modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { handleValidateQR } = useQR();
-  ///MODAL
 
+  // Función para manejar el escaneo del QR
   const handleStartScan = () => {
-    setShowScanner(true);
+    // Obtener la hora actual
+    const currentHour = new Date().getHours();
+    console.log(currentHour);
+    // Validar si la hora está entre las 6 AM (06:00) y 6 PM (18:00)
+    if (currentHour >= 1 && currentHour < 18) {
+      setShowScanner(true);
+    } else {
+      // Mostrar mensaje de error si está fuera del rango
+      alert("Fuera de horario.");
+      
+      // Hacer que el mensaje desaparezca después de 3 segundos
+      setTimeout(() => {
+        setValidationResult(null);
+      }, 3000);
+    }
   };
 
-  const handleScanResult = async (message: string) => {
+  // Función para manejar el resultado del escaneo
+  const handleScanResult = async () => {
     setShowScanner(false);
-
-    console.log("QR escaneado:", message); // Verifica qué valor tiene el QR escaneado
 
     try {
       const { statusCode } = await handleValidateQR();
@@ -31,6 +44,11 @@ export const Home = () => {
     } catch (error) {
       setValidationResult("Ocurrió un error al validar el QR.");
     }
+
+    // Hacer que el mensaje desaparezca después de 2 segundos
+    setTimeout(() => {
+      setValidationResult(null);
+    }, 2000);
   };
 
   const closeModal = () => {
@@ -39,7 +57,7 @@ export const Home = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-gray-100">
-      <div className="w-full max-w-lg p-8 bg-white rounded-lg shadow-md">
+      <div className="w-full max-w-lg p-8 transition-all duration-300 ease-in-out bg-white rounded-lg shadow-lg">
         <h1 className="mb-6 text-3xl font-bold text-center text-gray-800">
           Marca tu asistencia
         </h1>
@@ -51,7 +69,7 @@ export const Home = () => {
         {!showScanner && (
           <button
             onClick={handleStartScan}
-            className="w-full py-3 text-lg font-semibold text-white transition-all duration-300 bg-gray-700 rounded-lg hover:bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-400"
+            className="w-full py-3 text-lg font-semibold text-white transition-all duration-300 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
           >
             Escanear Código QR
           </button>
@@ -64,7 +82,7 @@ export const Home = () => {
         )}
 
         {validationResult && (
-          <p className="mt-4 text-lg font-bold text-center text-green-500">
+          <p className="mt-4 text-lg font-bold text-center text-green-500 transition-opacity duration-500 ease-in-out">
             {validationResult}
           </p>
         )}

@@ -17,8 +17,10 @@ export const QrScannerComponent = ({ onScan }: QrScannerComponentProps) => {
     // Configuración para ajustar el tamaño del escáner de forma responsiva
     const config = {
       fps: 10,
+      disableFlip: false,
+      aspectRatio: 1.333334,
       qrbox: function (viewfinderWidth: number, viewfinderHeight: number) {
-        const minEdgePercentage = 0.6; // Ajuste del tamaño del cuadro al 60% del ancho
+        const minEdgePercentage = 0.65; // Ajuste del tamaño del cuadro al 60% del ancho
         const minEdgeSize = Math.min(viewfinderWidth, viewfinderHeight);
         return {
           width: minEdgeSize * minEdgePercentage,
@@ -76,7 +78,11 @@ export const QrScannerComponent = ({ onScan }: QrScannerComponentProps) => {
     <div className="flex flex-col items-center justify-center bg-gradient-to-b">
       {/* Contenedor del lector QR */}
       <div className="w-full max-w-sm overflow-hidden">
-        <div id="qr-reader" style={{ width: "100%" }} ref={qrRef}></div>
+        <div
+          id="qr-reader"
+          className="w-full mx-auto bg-gray-200"
+          ref={qrRef}
+        ></div>
       </div>
 
       {error && (

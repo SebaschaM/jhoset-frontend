@@ -10,7 +10,7 @@ const useQR = () => {
       const token = response.headers["x-qr-token"];
 
       if (token) {
-        Cookies.set("authToken", token, { expires: 1 / 24, secure: true }); // 1 hora
+        Cookies.set("authTokenQR", token, { expires: 1 / 24, secure: true }); // 1 hora
       }
 
       return {};
@@ -22,7 +22,7 @@ const useQR = () => {
   const handleGetQRImage = async () => {
     try {
       // Obtener el token de las cookies
-      const token = Cookies.get("authToken");
+      const token = Cookies.get("authTokenQR");
 
       const { data } = await attendanceApi.get(`/qr/generate-qr`, {
         headers: {
@@ -39,7 +39,7 @@ const useQR = () => {
   const handleValidateQR = async () => {
     try {
       // Obtener el token de las cookies
-      const token = Cookies.get("authToken");
+      const token = Cookies.get("authTokenQR");
 
       const { data } = await attendanceApi.get(`/qr/validate-qr`, {
         headers: {

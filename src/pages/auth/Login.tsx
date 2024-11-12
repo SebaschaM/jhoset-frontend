@@ -24,7 +24,7 @@ export const Login = () => {
     const response = await handleLogin(data.username, data.password);
 
     if (response) {
-      navigate("/admin/inicio");
+      navigate("/admin/home");
     }
   };
 
